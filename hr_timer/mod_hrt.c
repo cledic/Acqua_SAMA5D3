@@ -24,7 +24,7 @@
 #define TP_HI	*((unsigned long *)PB_SODR) = (unsigned long)(TP_MASK);  
 #define TP_LO	*((unsigned long *)PB_CODR) = (unsigned long)(TP_MASK);  
 
-unsigned long timer_interval_ns = 25*1000;
+unsigned long timer_interval_ns = 14*1000;
 static struct hrtimer hr_timer;
 static unsigned int cnt;
 

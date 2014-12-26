@@ -1,0 +1,7 @@
+FRAMEBUFFER=/dev/fb0 startx &
+sleep 5
+DISPLAY=":0" xset s off
+DISPLAY=":0" xset -dpms
+DISPLAY=":0" xset s noblank
+export DISPLAY=:0.0
+xhost +localhost

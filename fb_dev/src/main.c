@@ -167,8 +167,10 @@ unsigned int lcd_scrollVerticalRGBRect( char *filename, struct RECT rect)
                 return 1;
 
         f=fopen( filename, "rb");
-        if (f==(FILE*)NULL)
-                return 1;
+        if (f==(FILE*)NULL) {
+      		free(buff);
+      		return 1;
+      	}
 
         fidx=0;
         while( !feof( f)) {
@@ -186,7 +188,6 @@ unsigned int lcd_scrollVerticalRGBRect( char *filename, struct RECT rect)
 
                 usleep( FrameRate*1000);
         }
-        //
         free(buff);
         fclose( f);
 
@@ -210,8 +211,10 @@ unsigned int lcd_drawRandomColor( struct RECT rect)
                 return 1;
 
         f=fopen( "/dev/urandom", "rb");
-        if (f==NULL)
-                return 1;
+        if (f==NULL) {
+      		free(buff);
+      		return 1;
+      	}
 
         fread( &buff[0], 1, (rect.w*rect.h*3), f);
 
@@ -232,6 +235,8 @@ void lcd_fillareaRect( struct RECT rect)
         int i;
 
         unsigned char *buff=(unsigned char*)malloc( (rect.w*rect.h*3));
+        if ( buff==NULL)
+                return 1;
 
         i=0;
         while( i<(rect.w*rect.h*3)) {
@@ -266,8 +271,10 @@ unsigned int lcd_drawRGBimageRect( const char *filename, struct RECT rect)
         memset( buff, 0x00, (rect.w*rect.h*3)+1);
 
         f=fopen( filename, "rb");
-        if (f==NULL)
+        if (f==NULL) {
+                free(buff);
                 return 1;
+        }
 
         fread( &buff[0], 1, (rect.w*rect.h*3), f);
 
@@ -294,8 +301,10 @@ unsigned int lcd_drawRGBimage( const char *filename)
         memset( buff, 0x00, (800*480*3)+1);
 
         f=fopen( filename, "rb");
-        if (f==NULL)
+        if (f==NULL){
+                free(buff);
                 return 1;
+        }
 
         fread( &buff[0], 1, (800*480*3), f);
 
@@ -324,8 +333,10 @@ unsigned int lcd_drawmovieRGBRect( char *filename, struct RECT rect)
                 return 1;
 
         f=fopen( filename, "rb");
-        if (f==(FILE*)NULL)
+        if (f==(FILE*)NULL){
+                free(buff);
                 return 1;
+        }
 
         while( !feof( f)) {
                 // metto a zero l'intero array
